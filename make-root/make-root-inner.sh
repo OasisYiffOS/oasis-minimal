@@ -110,18 +110,20 @@ if [ -f ${bulge} ]; then
     rm ${bulge} 
 fi
 
-curl -o ${bulge} https://yiffos.owenofarrell.com/bulge
+wget -v -O ${bulge} https://yiffos.elysiumorpheus.com/bulge --read-timeout=5
 chmod +x ${bulge}
 
-yes | ${bulge} setup
+cp ${bulge} $R/bin
 
-echo "install pkgs..."
-yes | ${bulge} s
-yes | ${bulge} gi base
-yes | ${bulge} i gnutls libxcrypt libgcrypt grub2 btrfs-progs grep
-yes | ${bulge} i networkmanager
-yes | ${bulge} i bulge
-yes | ${bulge} i vim nano
+INSTALL_ROOT=$R ${bulge} setup
+INSTALL_ROOT=$R yes | ${bulge} gi base
+
+ln -s ./bash $R/bin/sh
+
+# TODO this won't be needed later
+# but as OasisYiffOS in its current state has some packages that it can't build
+# so the package never gets downloaded and bulge crashes when trying to delete it
+rm -r $R/tmp/*
 
 echo "compress..."
 cd root
