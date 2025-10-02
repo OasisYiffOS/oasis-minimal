@@ -1,3 +1,5 @@
+# we run this in a container
+# i broke my system once
 docker run --rm -it \
     -v .:/workspace \
     --workdir /workspace \

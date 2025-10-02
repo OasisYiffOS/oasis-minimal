@@ -113,16 +113,26 @@ fi
 wget -v -O ${bulge} https://yiffos.elysiumorpheus.com/bulge --read-timeout=5
 chmod +x ${bulge}
 
-cp ${bulge} $R/bin
-
 INSTALL_ROOT=$R ${bulge} setup
 INSTALL_ROOT=$R yes | ${bulge} gi base
 
+# TODO we need certs
+wget -v -O $R/etc/ssl/certdata.txt https://raw.githubusercontent.com/alpinelinux/ca-certificates/refs/heads/master/certdata.txt
+
+# for testing althoug this should be in base
+INSTALL_ROOT=$R yes | ${bulge} i curl
+
 ln -s ./bash $R/bin/sh
+
+# TODO bulge package is broken
+cp ${bulge} $R/bin
 
 # TODO this won't be needed later
 # but as OasisYiffOS in its current state has some packages that it can't build
 # so the package never gets downloaded and bulge crashes when trying to delete it
+# borken pacakges:
+# nss
+# uwufetch
 rm -r $R/tmp/*
 
 echo "compress..."
