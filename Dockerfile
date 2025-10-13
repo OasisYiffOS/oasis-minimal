@@ -1,4 +1,4 @@
 FROM scratch
 ADD root.tar.xz /
-RUN make-ca -C /etc/ssl/certdata.txt
+#RUN cat /etc/ssl/certs/*.pem > /etc/ssl/cert.pem
 CMD ["/usr/bin/bash"]
